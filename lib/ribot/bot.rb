@@ -37,7 +37,11 @@ module RiBot
       return unless should_handle_message?(msg)
 
       arg = msg.parse(@keyword)
-      text = arg.empty? ? usage : Ri.execute(arg)
+      text = case arg
+             when "" then usage
+             when "help" then usage("help")
+             else Ri.execute(arg) 
+             end
       text = usage(arg) if text.empty?
 
       send_text(data.channel, text)
@@ -64,12 +68,12 @@ module RiBot
       usage = ""
       if arg.empty?
         usage += "Sorry, I don't understand your query. :sweat_smile:\n\n"
-      else
+      elsif arg != "help"
         usage += "Sorry, I don't know what `#{arg}` is. :sweat_smile:\n\n"
       end
 
       usage += "If you want to talk, please try one of the following:\n"
-      usage += "In the channels where I've been invited (#{channels.join(", ")}), try one of the following commands:\n"
+      usage += "In the channels where I've been invited (#{channels.join(", ")}), type one of the following commands:\n"
       usage += " - `ri Array#sort`\n"
       usage += " - `@#{@id} Array#sort`\n"
       usage += "Or send me a direct message:\n"
