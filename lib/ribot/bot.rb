@@ -5,6 +5,7 @@ module RiBot
       @id = nil
       @dm_channel_ids = []
       @keyword = "ri"
+      @channels = {}
     end
 
     def start
@@ -36,14 +37,14 @@ module RiBot
       return unless should_handle_message?(msg)
 
       arg = msg.parse(@keyword)
-      text = arg.empty? ? "usage" : Ri.execute(arg)
-      text = "usage" if text.empty?
+      text = arg.empty? ? usage : Ri.execute(arg)
+      text = usage(arg) if text.empty?
 
       send_text(data.channel, text)
     end
 
     def should_handle_message?(message)
-      return false if message.is_hidden? || message.is_from?(@id)
+      return false if message.is_hidden? || message.is_from?(@id) || message.is_from?("USLACKBOT")
 
       message.is_mention_to?(@id) ||
         message.is_in_dm_channel?(@dm_channel_ids) ||
@@ -52,6 +53,27 @@ module RiBot
 
     def send_text(channel, text)
       @client.message channel: channel, text: text
+    end
+
+    def channels
+      ch = @client.channels.values
+      ch.select { |c| !c.members.nil? && c.members.include?(@id) }.map { |c| "##{c.name}" }
+    end
+
+    def usage(arg = '')
+      usage = ""
+      if arg.empty?
+        usage += "Sorry, I don't understand your query. :sweat_smile:\n\n"
+      else
+        usage += "Sorry, I don't know what `#{arg}` is. :sweat_smile:\n\n"
+      end
+
+      usage += "If you want to talk, please try one of the following:\n"
+      usage += "In the channels where I've been invited (#{channels.join(", ")}), try one of the following commands:\n"
+      usage += " - `ri Array#sort`\n"
+      usage += " - `@#{@id} Array#sort`\n"
+      usage += "Or send me a direct message:\n"
+      usage += " - `/msg @#{@id} Array#sort`\n"
     end
   end
 end
