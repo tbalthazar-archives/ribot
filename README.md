@@ -61,7 +61,7 @@ $ TOKEN=your-slack-api-token script/run
 
 ## Token
 
-The bot needs a Slack API Token to works properly.
+The bot needs a Slack API Token to work properly.
 The `script/run` script will:
 1. look for a `TOKEN` environment variable
 2. if not found, it will try to read the token from the `.token` file
