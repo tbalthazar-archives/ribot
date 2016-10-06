@@ -13,11 +13,11 @@ class MessageTest < MiniTest::Test
 
     @keyword = "FakeKeyword"
     @msgs_with_keyword = []
+    @msgs_with_keyword << RiBot::Message.new(FakeSlackMessage.new("#{@keyword}"))
     @msgs_with_keyword << RiBot::Message.new(FakeSlackMessage.new("#{@keyword} Array#first"))
     @msgs_with_keyword << RiBot::Message.new(FakeSlackMessage.new("#{@keyword.upcase} Array#first"))
 
     @msgs_without_keyword = []
-    @msgs_without_keyword << RiBot::Message.new(FakeSlackMessage.new("#{@keyword}"))
     @msgs_without_keyword << RiBot::Message.new(FakeSlackMessage.new("#{@keyword}foo"))
     @msgs_without_keyword << RiBot::Message.new(FakeSlackMessage.new("foo #{@keyword} bar"))
 
@@ -41,6 +41,24 @@ class MessageTest < MiniTest::Test
 
     msg = RiBot::Message.new(FakeSlackMessage.new("Hello"))
     refute msg.is_empty?, "'#{msg.text}' should not be considered as empty"
+  end
+
+  def test_is_hidden
+    msg = RiBot::Message.new(FakeSlackMessage.new("Hello", "Channel", "User", true))
+    assert msg.is_hidden?, "#{msg.inspect} should be considered as hidden"
+
+    msg = RiBot::Message.new(FakeSlackMessage.new("Hello", "Channel", "User"))
+    refute msg.is_hidden?, "#{msg.inspect} should not be considered as hidden"
+  end
+
+  def test_is_from
+    user = "a_fake_user"
+    msg = RiBot::Message.new(FakeSlackMessage.new("Hello", "Channel", user))
+    assert msg.is_from?(user), "#{msg.inspect} should be considered as from #{user}"
+
+    user2 = "another_fake_user"
+    msg = RiBot::Message.new(FakeSlackMessage.new("Hello", "Channel", user2))
+    refute msg.is_from?(user), "#{msg.inspect} should not be considered as from #{user}"
   end
 
   def test_is_mention_to

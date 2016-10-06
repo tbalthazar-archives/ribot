@@ -12,8 +12,20 @@ module RiBot
       @data.channel
     end
 
+    def user
+      @data.user
+    end
+
     def is_empty?
       text.strip.empty?
+    end
+
+    def is_hidden?
+      @data.hidden == true
+    end
+
+    def is_from?(username)
+      user.upcase == username.upcase
     end
 
     def is_mention_to?(username)
@@ -21,7 +33,9 @@ module RiBot
     end
 
     def contains_keyword?(keyword)
-      upcase_text.start_with?("#{keyword.upcase} ")
+      keyword = keyword.upcase
+      upcase_text == keyword ||
+        upcase_text.start_with?("#{keyword} ")
     end
 
     def is_in_dm_channel?(channels)

@@ -35,16 +35,23 @@ module RiBot
       msg = Message.new(data)
       return unless should_handle_message?(msg)
 
-      result = Ri.execute(msg.parse(@keyword))
-      puts "result: -#{result}- / #{result.class}"
-      @client.message channel: data.channel, text: result
+      arg = msg.parse(@keyword)
+      text = arg.empty? ? "usage" : Ri.execute(arg)
+      text = "usage" if text.empty?
+
+      send_text(data.channel, text)
     end
 
     def should_handle_message?(message)
-      !message.is_empty? &&
-        message.is_mention_to?(@id) ||
+      return false if message.is_hidden? || message.is_from?(@id)
+
+      message.is_mention_to?(@id) ||
         message.is_in_dm_channel?(@dm_channel_ids) ||
         message.contains_keyword?(@keyword)
+    end
+
+    def send_text(channel, text)
+      @client.message channel: channel, text: text
     end
   end
 end
