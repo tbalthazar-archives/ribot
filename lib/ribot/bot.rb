@@ -33,12 +33,14 @@ module RiBot
 
     def handle_data(data)
       msg = Message.new(data)
+      # puts "--- will inspect #{data.inspect}"
       return unless should_handle_message?(msg)
-      puts "-- will handle #{msg.text}"
+      puts "-- will handle #{msg.parse(@keyword)}"
     end
 
     def should_handle_message?(message)
-      message.is_mention_to?(@id) ||
+      !message.is_empty? &&
+        message.is_mention_to?(@id) ||
         message.is_in_dm_channel?(@dm_channel_ids) ||
         message.contains_keyword?(@keyword)
     end

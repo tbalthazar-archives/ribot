@@ -5,11 +5,15 @@ module RiBot
     end
 
     def text
-      @data.text
+      @data.text || ''
     end
 
     def channel
       @data.channel
+    end
+
+    def is_empty?
+      text.strip.empty?
     end
 
     def is_mention_to?(username)
@@ -22,6 +26,10 @@ module RiBot
 
     def is_in_dm_channel?(channels)
       channels.map(&:upcase).include?(self.channel.upcase)
+    end
+
+    def parse(keyword)
+      text.gsub(keyword, "").gsub(/\<\@[^>]+\>\s?/, "").strip
     end
 
     private

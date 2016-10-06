@@ -29,6 +29,20 @@ class MessageTest < MiniTest::Test
     @msg_in_random_channel = RiBot::Message.new(FakeSlackMessage.new("Hey", "RandomChannel"))
   end
 
+  def test_is_empty
+    msgs = []
+    msgs << RiBot::Message.new(FakeSlackMessage.new(""))
+    msgs << RiBot::Message.new(FakeSlackMessage.new(" "))
+    msgs << RiBot::Message.new(FakeSlackMessage.new("  "))
+
+    msgs.each do |msg|
+      assert msg.is_empty?, "'#{msg.text}' should be considered as empty"
+    end
+
+    msg = RiBot::Message.new(FakeSlackMessage.new("Hello"))
+    refute msg.is_empty?, "'#{msg.text}' should not be considered as empty"
+  end
+
   def test_is_mention_to
     @msgs_with_mention.each do |msg|
       assert msg.is_mention_to?(@username), "#{msg.text} should be considered as a mention to #{@username}"
@@ -52,5 +66,24 @@ class MessageTest < MiniTest::Test
       assert msg.is_in_dm_channel?(@channels), "#{msg.channel} should be detected in #{@channels}"
     end
     refute @msg_in_random_channel.is_in_dm_channel?(@channels)
+  end
+
+  def test_parse
+    values = [
+      {in: "Hello bot! <@#{@username}>", out: 'Hello bot!'},
+      {in: "<@#{@username}> Hello bot!", out: 'Hello bot!'},
+      {in: "Hello <@#{@username}> bot!", out: 'Hello bot!'},
+      {in: "<@#{@username}>", out: ''},
+      {in: "#{@keyword} Hello bot!", out: 'Hello bot!'},
+      {in: "<@#{@username}> #{@keyword} Hello bot!", out: 'Hello bot!'},
+      {in: "#{@keyword} <@#{@username}> Hello bot!", out: 'Hello bot!'},
+      {in: "#{@keyword} Hello bot! <@#{@username}>", out: 'Hello bot!'},
+      {in: "<@#{@username}> Hello bot! <@anotheruser>", out: 'Hello bot!'},
+    ]
+
+    values.each do |value|
+      message = RiBot::Message.new(FakeSlackMessage.new(value[:in]))
+      assert_equal value[:out], message.parse(@keyword), "#{value[:in]} should be #{value[:out]} but is #{message.parse(@keyword)}"
+    end
   end
 end
