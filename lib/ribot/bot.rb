@@ -3,6 +3,7 @@ module RiBot
     def initialize(client = nil)
       @client = client
       @id = nil
+      @name = ''
       @dm_channel_ids = []
       @keyword = "ri"
       @channels = {}
@@ -10,9 +11,10 @@ module RiBot
 
     def start
       @client.on :hello do
-        puts "#{@client.self.name} has connected to https://#{@client.team.domain}.slack.com and is waiting for your commands."
         @id = @client.self.id
+        @name = @client.self.name
         @dm_channel_ids += @client.ims.keys
+        welcome
       end
       
       @client.on :message do |data|
@@ -75,9 +77,36 @@ module RiBot
       usage += "If you want to talk, please try one of the following:\n"
       usage += "In the channels where I've been invited (#{channels.join(", ")}), type one of the following commands:\n"
       usage += " - `ri Array#sort`\n"
-      usage += " - `@#{@id} Array#sort`\n"
+      usage += " - `@#{@name} Array#sort`\n"
       usage += "Or send me a direct message:\n"
-      usage += " - `/msg @#{@id} Array#sort`\n"
+      usage += " - `/msg @#{@name} Array#sort`\n"
+    end
+
+    def welcome
+      url = "https://#{@client.team.domain}.slack.com"
+      str = %q(
+                _____
+               /_____\
+          ____[\`---'/]____
+         /\ #\ \_____/ /# /\
+        /  \# \_.---._/ #/  \
+       /   /|\  |   |  /|\   \      RiBot - The Ruby API Reference Bot
+      /___/ | | |   | | | \___\
+      |  |  | | |---| | |  |  |     Connected to _URL_ and is waiting for your commands.
+      |__|  \_| |_#_| |_/  |__|     To learn how to use it, type this command in Slack:
+      //\\\\  <\ _//^\\\\_ />  //\\\\     /msg @_NAME_ help
+      \||/  |\//// \\\\\\\\/|  \||/
+            |   |   |   |           Hit CTRL+C to stop it.
+            |---|   |---|
+            |---|   |---|
+            |   |   |   |
+            |___|   |___|
+            /   \   /   \
+           |_____| |_____|
+           |HHHHH| |HHHHH|
+
+      )
+      puts str.gsub("_URL_", url).gsub("_NAME_", @name)
     end
   end
 end
