@@ -93,7 +93,7 @@ module RiBot
         /  \# \_.---._/ #/  \
        /   /|\  |   |  /|\   \      RiBot - The Ruby API Reference Bot
       /___/ | | |   | | | \___\
-      |  |  | | |---| | |  |  |     Connected to _URL_ and is waiting for your commands.
+      |  |  | | |---| | |  |  |     Connected to _URL_ and waiting for your commands.
       |__|  \_| |_#_| |_/  |__|     To learn how to use it, type this command in Slack:
       //\\\\  <\ _//^\\\\_ />  //\\\\     /msg @_NAME_ help
       \||/  |\//// \\\\\\\\/|  \||/
