@@ -74,8 +74,9 @@ module RiBot
         usage += "Sorry, I don't know what `#{arg}` is. :sweat_smile:\n\n"
       end
 
-      usage += "If you want to talk, please try one of the following:\n"
-      usage += "In the channels where I've been invited (#{channels.join(", ")}), type one of the following commands:\n"
+      chanlist = channels.empty? ? "none" : channels.join(", ")
+      usage += "If you want to help, please try one of the following:\n"
+      usage += "In the channels where I've been invited (#{chanlist}), type one of the following commands:\n"
       usage += " - `ri Array#sort`\n"
       usage += " - `@#{@name} Array#sort`\n"
       usage += "Or send me a direct message:\n"

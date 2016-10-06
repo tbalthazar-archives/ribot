@@ -1,0 +1,38 @@
+#!/bin/sh
+
+# script/server: Launch the application and any extra required processes
+#                locally.
+
+set -e
+
+cd "$(dirname "$0")/.."
+
+read_token() {
+  if [ -f ".token" ]; then
+	  export TOKEN=`cat .token`
+  fi
+}
+
+ask_token() {
+  stty_orig=`stty -g` # save original terminal setting.
+  stty -echo          # turn-off echoing.
+  read -p "Slack API Token token: " token         # read the password
+  stty $stty_orig     # restore terminal setting.
+  export TOKEN=$token
+}
+
+# try to get the token from the env
+if [ -z $TOKEN ]; then
+  # if not set, try to read it from the .token file
+  read_token
+  # if not set, ask for it
+  if [ -z $TOKEN ]; then
+    ask_token
+  fi
+  if [ -z $TOKEN ]; then
+	  echo "Error: the TOKEN environment variable is not set."
+	  exit 1
+  fi
+fi
+
+ruby run.rb

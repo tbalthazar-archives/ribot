@@ -29,3 +29,4 @@ build/
 .rvmrc
 
 .env
+.token
