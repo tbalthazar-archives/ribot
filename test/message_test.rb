@@ -79,6 +79,8 @@ class MessageTest < MiniTest::Test
       {in: "#{@keyword} <@#{@username}> Hello bot!", out: 'Hello bot!'},
       {in: "#{@keyword} Hello bot! <@#{@username}>", out: 'Hello bot!'},
       {in: "<@#{@username}> Hello bot! <@anotheruser>", out: 'Hello bot!'},
+      {in: "<@#{@username}> Hello bot! <@anotheruser> -i", out: 'Hello bot!'},
+      {in: "<@#{@username}> Hello bot! <@anotheruser> --interactive", out: 'Hello bot!'},
     ]
 
     values.each do |value|
