@@ -29,7 +29,10 @@ module RiBot
     end
 
     def parse(keyword)
-      text.gsub(keyword, "").gsub(/\<\@[^>]+\>\s?/, "").strip
+      txt = text.gsub(keyword, "")          # removes the keyword (e.g: 'ri') from the string
+      txt = txt.gsub(/\<\@[^>]+\>\s?/, "")  # removes all the <@mentions>
+      txt = txt.gsub(/\-+[^\s]*/, "")       # removes all the flags (e.g: '-i' or '--interactive')
+      txt.strip
     end
 
     private

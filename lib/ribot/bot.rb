@@ -33,9 +33,11 @@ module RiBot
 
     def handle_data(data)
       msg = Message.new(data)
-      # puts "--- will inspect #{data.inspect}"
       return unless should_handle_message?(msg)
-      puts "-- will handle #{msg.parse(@keyword)}"
+
+      result = Ri.execute(msg.parse(@keyword))
+      puts "result: -#{result}- / #{result.class}"
+      @client.message channel: data.channel, text: result
     end
 
     def should_handle_message?(message)
