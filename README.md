@@ -27,33 +27,33 @@ RiBot uses the [ri CLI tool](http://www.jstorimer.com/blogs/workingwithcode/7766
 
 ## Getting Started
 
-1. Create a new bot user in your Slack account:
+*1. Create a new bot user in your Slack account:*
 
 - Visit https://my.slack.com/apps/new/A0F7YS25R-bots
 - Choose a username for your bot, e.g: `ribot`
 - Take note of the API Token for this bot
 - Click the Save Integration button
 
-2. Clone this repository:
+*2. Clone this repository:*
 
 ```bash
 $ git clone xxx
 ``` 
 
-3. Change directory to `ribot` and run the setup script:
+*3. Change directory to `ribot` and run the setup script:*
 
 ```bash
 $ cd ribot
 $ script/setup
 ``` 
 
-4. Run the ribot client:
+*4. Run the ribot client:*
 
 ```bash
 $ TOKEN=your-slack-api-token script/run
 ``` 
 
-5. Open Slack and type the following command:
+*5. Open Slack and type the following command:*
 
 ```bash
 /msg @ribot help
