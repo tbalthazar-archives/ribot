@@ -3,7 +3,10 @@ require 'minitest/autorun'
 require 'ribot'
 
 module RiBot
+  # Internal: Various methods useful for testing.
   module TestHelpers
+    # Use this method if you want to capture the output a block usually
+    # sent to stdout.
     def capture_stdout(&block)
       original_stdout = $stdout
       $stdout = fake = StringIO.new
@@ -15,12 +18,25 @@ module RiBot
      fake.string
     end
     
+    # Internal: This class allows you to test if the object responsible for
+    # running the ri command was called. The execute method returns the
+    # passed arg.
     class FakeRi
+      # Internal: Fake the execution of a ri command.
+      #
+      # arg - The String containing the arguments passed to the ri command.
+      #
+      # Examples
+      #
+      #   ri.execute("Array#sort")
+      #
+      # Returns the arg that it was passed.
       def execute(arg)
         arg 
       end
     end
     
+    # Internal: This class is used in the tests to mock a message from Slack.
     class FakeSlackMessage
       attr_accessor :text, :channel, :user, :hidden
     
@@ -32,6 +48,8 @@ module RiBot
       end
     end
     
+    # Internal: This class is used in the tests to mock the Slack client and
+    # run the tests without touching the network.
     class FakeSlackClient
       attr_reader :messages
     

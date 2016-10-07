@@ -34,6 +34,8 @@ class BotTest < MiniTest::Test
     assert_equal message, @fake_client.messages[channel].first
   end
 
+  # Test that the welcome message contains some values specific
+  # to the Slack team
   def test_hello
     slack_url = "https://#{@fake_client.team.domain}.slack.com"
     help_msg = "/msg @#{@fake_client.self.name} help"
@@ -60,15 +62,19 @@ class BotTest < MiniTest::Test
     assert_equal "Client has disconnected successfully!", out.chomp
   end
 
+  # Test that a direct message sent to the bot will result in the output
+  # of the ri command being sent to Slack.
   def test_valid_direct_message
     msg = FakeSlackMessage.new(@text, @dm_channel_id)
     trigger_hello_event_silently
 
     @fake_client.trigger_event(:message, msg)
 
-    # @fake_ri.execute returns the arg it was passed, so we can test
-    # the the arg was sent as a messgage. The arg should be the 
-    # @valid_ruby_method extracted from @text
+    # We test that a message has been sent to a channel. The message
+    # should be the result of the ri command. The FakeRi used in the
+    # tests returns the arg it was given (instead of issuing a real
+    # ri command). It means that we can check for the arg that has
+    # been extracted from the @text, which is @valid_ruby_method.
     assert_message_sent_in_channel(@valid_ruby_method, @dm_channel_id)
   end
 
@@ -78,9 +84,12 @@ class BotTest < MiniTest::Test
 
     @fake_client.trigger_event(:message, msg)
 
-    # @fake_ri.execute returns the arg it was passed, so we can test
-    # the the arg was sent as a messgage. The arg should be the 
-    # @valid_ruby_method extracted from @text_with_mention
+    # We test that a message has been sent to a channel. The message
+    # should be the result of the ri command. The FakeRi used in the
+    # tests returns the arg it was given (instead of issuing a real
+    # ri command). It means that we can check for the arg that has
+    # been extracted from the @text_with_mention, which is
+    # @valid_ruby_method.
     assert_message_sent_in_channel(@valid_ruby_method, @channel_id)
   end
 
@@ -90,9 +99,12 @@ class BotTest < MiniTest::Test
 
     @fake_client.trigger_event(:message, msg)
 
-    # @fake_ri.execute returns the arg it was passed, so we can test
-    # the the arg was sent as a messgage. The arg should be the 
-    # @valid_ruby_method extracted from @text_with_trigger
+    # We test that a message has been sent to a channel. The message
+    # should be the result of the ri command. The FakeRi used in the
+    # tests returns the arg it was given (instead of issuing a real
+    # ri command). It means that we can check for the arg that has
+    # been extracted from the @text_with_trigger, which is
+    # @valid_ruby_method.
     assert_message_sent_in_channel(@valid_ruby_method, @channel_id)
   end
 
@@ -102,9 +114,12 @@ class BotTest < MiniTest::Test
 
     @fake_client.trigger_event(:message, msg)
 
-    # @fake_ri.execute returns the arg it was passed, so we can test
-    # the the arg was sent as a messgage. The arg should be the 
-    # @valid_ruby_method extracted from @text_with_mention_and_trigger
+    # We test that a message has been sent to a channel. The message
+    # should be the result of the ri command. The FakeRi used in the
+    # tests returns the arg it was given (instead of issuing a real
+    # ri command). It means that we can check for the arg that has
+    # been extracted from the @text_with_mention_and_trigger, which is
+    # @valid_ruby_method.
     assert_message_sent_in_channel(@valid_ruby_method, @channel_id)
   end
 
@@ -113,7 +128,7 @@ class BotTest < MiniTest::Test
     trigger_hello_event_silently
 
     # Make @fake_ri.execute return "" to simulate an unknown ruby method.
-    # In that case, the bot send the help message
+    # In that case, the bot send the help message.
     @fake_ri.stub :execute, "" do
       @fake_client.trigger_event(:message, msg)
 
