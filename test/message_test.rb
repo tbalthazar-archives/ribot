@@ -1,6 +1,7 @@
 require File.dirname(__FILE__) + '/helper'
 
 class MessageTest < MiniTest::Test
+  include RiBot::TestHelpers
 
   def setup
     @username = "FakeUsername"

@@ -1,12 +1,13 @@
 module RiBot
   class Bot
-    def initialize(client = nil)
+    TRIGGER = "ri"
+
+    def initialize(client = nil, ri = nil)
       @client = client
+      @ri = ri
       @id = nil
       @name = ''
       @dm_channel_ids = []
-      @keyword = "ri"
-      @channels = {}
     end
 
     def start
@@ -38,11 +39,11 @@ module RiBot
       msg = Message.new(data)
       return unless should_handle_message?(msg)
 
-      arg = msg.parse(@keyword)
+      arg = msg.parse(TRIGGER)
       text = case arg
              when "" then usage
              when "help" then usage("help")
-             else Ri.execute(arg) 
+             else @ri.execute(arg) 
              end
       text = usage(arg) if text.empty?
 
@@ -54,7 +55,7 @@ module RiBot
 
       message.is_mention_to?(@id) ||
         message.is_in_dm_channel?(@dm_channel_ids) ||
-        message.contains_keyword?(@keyword)
+        message.contains_keyword?(TRIGGER)
     end
 
     def send_text(channel, text)
@@ -75,9 +76,9 @@ module RiBot
       end
 
       chanlist = channels.empty? ? "none" : channels.join(", ")
-      usage += "If you want to help, please try one of the following:\n"
+      usage += "If you want me to help, please try one of the following:\n"
       usage += "In the channels where I've been invited (#{chanlist}), type one of the following commands:\n"
-      usage += " - `ri Array#sort`\n"
+      usage += " - `#{TRIGGER} Array#sort`\n"
       usage += " - `@#{@name} Array#sort`\n"
       usage += "Or send me a direct message:\n"
       usage += " - `/msg @#{@name} Array#sort`\n"

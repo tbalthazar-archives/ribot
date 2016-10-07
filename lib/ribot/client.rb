@@ -4,7 +4,9 @@ module RiBot
       raise ArgumentError.new('Token cannot be blank') if token.nil? || token.strip.empty?
 
       options[:token] = token
-      @bot = Bot.new(Slack::RealTime::Client.new(options))
+      slack_client = Slack::RealTime::Client.new(options)
+      ri_processor = Ri.new
+      @bot = Bot.new(slack_client, ri_processor)
     end
 
     def start
