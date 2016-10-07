@@ -92,7 +92,7 @@ module RiBot
       return false if message.is_hidden? || message.is_from?(@id) || message.is_from?("USLACKBOT")
 
       message.is_mention_to?(@id) ||
-        message.is_in_dm_channel?(@dm_channel_ids) ||
+        message.is_in_channel?(@dm_channel_ids) ||
         message.contains_keyword?(TRIGGER)
     end
 

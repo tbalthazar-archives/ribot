@@ -82,9 +82,9 @@ class MessageTest < MiniTest::Test
 
   def test_is_in_dm_channel
     @msgs_in_dm_channel.each do |msg|
-      assert msg.is_in_dm_channel?(@channels), "#{msg.channel} should be detected in #{@channels}"
+      assert msg.is_in_channel?(@channels), "#{msg.channel} should be detected in #{@channels}"
     end
-    refute @msg_in_random_channel.is_in_dm_channel?(@channels)
+    refute @msg_in_random_channel.is_in_channel?(@channels)
   end
 
   def test_parse

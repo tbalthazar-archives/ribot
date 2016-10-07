@@ -74,11 +74,11 @@ module RiBot
     # Examples
     #
     #   msg = Message.new(data)
-    #   msg.is_in_dm_channel?("channel1")
+    #   msg.is_in_channel?("channel1")
     #
     # Returns true if the message belongs to one of the channels,
     # false otherwise.
-    def is_in_dm_channel?(channels)
+    def is_in_channel?(channels)
       channels.map(&:upcase).include?(channel.upcase)
     end
 
