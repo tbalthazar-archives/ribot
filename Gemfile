@@ -1,6 +1,11 @@
 source "https://rubygems.org"
 
-gem 'slack-ruby-client'
-gem 'eventmachine'
-gem 'faye-websocket'
-gem 'rake'
+ruby '>= 2.0.0'
+
+gem 'slack-ruby-client', '~> 0.7.7'
+gem 'eventmachine', '~> 1.2.0'
+gem 'faye-websocket', '~> 0.10.4'
+
+group :test do
+  gem 'rake', '~> 11.3.0'
+end

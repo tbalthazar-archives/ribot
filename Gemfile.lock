@@ -41,10 +41,13 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  eventmachine
-  faye-websocket
-  rake
-  slack-ruby-client
+  eventmachine (~> 1.2.0)
+  faye-websocket (~> 0.10.4)
+  rake (~> 11.3.0)
+  slack-ruby-client (~> 0.7.7)
+
+RUBY VERSION
+   ruby 2.3.1p112
 
 BUNDLED WITH
-   1.13.1
+   1.13.2

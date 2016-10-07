@@ -10,8 +10,7 @@ class BotTest < MiniTest::Test
     @channel_id = @fake_client.channels.keys.first
     # the id of the bot's direct message channel
     @dm_channel_id = @fake_client.ims.keys.first   
-    # used to stub the ri command
-    @fake_ri_output = "Lorem ipsum"
+    # this is what should be extracted from a message and passed to the ri command
     @valid_ruby_method = "Array#sort"
     @text = @valid_ruby_method
     @text_with_mention = "<@#{@fake_client.self.id}> #{@valid_ruby_method}"
