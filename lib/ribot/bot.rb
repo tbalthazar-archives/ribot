@@ -93,7 +93,7 @@ module RiBot
 
       message.is_mention_to?(@id) ||
         message.is_in_channel?(@dm_channel_ids) ||
-        message.contains_keyword?(TRIGGER)
+        message.contains_trigger?(TRIGGER)
     end
 
     # Internal: Send a message to a channel in Slack.

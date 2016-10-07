@@ -53,18 +53,18 @@ module RiBot
 
     # Internal: Detect if a message contains a trigger for the bot.
     #
-    # username - The String username to look for.
+    # trigger - The String trigger to look for.
     #
     # Examples
     #
     #   msg = Message.new(data)
-    #   msg.contains_keyword?("ri")
+    #   msg.contains_trigger?("ri")
     #
     # Returns true if the message contains the trigger, false otherwise.
-    def contains_keyword?(keyword)
-      keyword = keyword.upcase
-      upcase_text == keyword ||
-        upcase_text.start_with?("#{keyword} ")
+    def contains_trigger?(trigger)
+      trigger = trigger.upcase
+      upcase_text == trigger ||
+        upcase_text.start_with?("#{trigger} ")
     end
 
     # Internal: Detect if a message has been sent in one of the given channels.

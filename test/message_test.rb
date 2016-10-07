@@ -68,19 +68,19 @@ class MessageTest < MiniTest::Test
     end
   end
 
-  def test_contains_keyword
+  def test_contains_trigger
     @msgs_with_keyword.each do |msg|
-      assert msg.contains_keyword?(@keyword), "#{@keyword} should have been detected in #{msg.text}"
+      assert msg.contains_trigger?(@keyword), "#{@keyword} should have been detected in #{msg.text}"
     end
   end
 
-  def test_do_not_contain_keyword
+  def test_do_not_contain_trigger
     @msgs_without_keyword.each do |msg|
-      refute msg.contains_keyword?(@keyword), "#{@keyword} should not have been detected in #{msg.text}"
+      refute msg.contains_trigger?(@keyword), "#{@keyword} should not have been detected in #{msg.text}"
     end
   end
 
-  def test_is_in_dm_channel
+  def test_is_in_channel
     @msgs_in_dm_channel.each do |msg|
       assert msg.is_in_channel?(@channels), "#{msg.channel} should be detected in #{@channels}"
     end
