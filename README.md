@@ -91,7 +91,7 @@ $ script/test
 
 **Remark**: Slack offers an Event API and a RealTime Messaging (RTM) API. The RTP API uses websockets and do not require the machine running the bot to be able to receive external HTTP requests. This project needs to be able to run on a machine that is not publicly visible on the Internet (e.g: a laptop vs a server). This bot thus needs to use the RTM API.
 
-**slack-ruby-client** is a Ruby client that talks to the Slack RealTime Messaging API. Since the idea of this project is to develop a bot and not a client for the Slack API, it made sense to me to use this gem. Its API is clean and my code only use a few methods of it. Replacing this gem by another one shouldn't infer too much change in the RiBot code.
+**slack-ruby-client** is a Ruby client that talks to the Slack RealTime Messaging API. Since the idea of this project is to develop a bot and not a client for the Slack API, it made sense to me to use this gem. Its API is clean and my code only uses a few methods of it. Should this gem stop working, replacing it by another one do not necessitate too much change in the RiBot code.
 
 **EventMachine** and **faye-websocket** are dependencies for the **slack-ruby-client** gem.
 
@@ -101,4 +101,4 @@ $ script/test
 
 - I decided to allow the user to talk to the bot is several ways: via direct messages, by mentionning it or by using the `ri` trigger command. That way, the bot accomodates to the user's preferences, not the other way around.
 - I tried to make the bot as helpful as possible when handling errors, by replying with the expected usage of the bot and giving some context to the message (e.g: listing the channels which the bot is a member of)
-- Bots should be fun and helpful. When the bot starts, it prints a picture of itself and a helpful message that explain how to use it for the first time.
+- Bots should be fun and helpful. When the bot starts, it prints a picture of itself and a helpful message that explains how to use it for the first time.
