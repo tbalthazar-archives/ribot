@@ -37,7 +37,7 @@ RiBot uses the [ri CLI tool](http://www.jstorimer.com/blogs/workingwithcode/7766
 **2. Clone this repository:**
 
 ```bash
-$ git clone git@github.com:tbalthazar/ribot.git
+$ git clone https://github.com/tbalthazar/ribot.git
 ``` 
 
 **3. Change directory to `ribot` and run the setup script:**
@@ -68,6 +68,9 @@ In the channels where the bot has been invited, type one of the following comman
 - `@ribot Array#sort`
 Or send the bot a direct message:
 - `/msg @ribot Array#sort`
+
+To invite the bot to a channel, enter a channel and type:
+- `/invite @ribot`
 
 ## Token
 

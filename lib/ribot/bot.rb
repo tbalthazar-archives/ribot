@@ -152,6 +152,8 @@ module RiBot
       usage += " - `@#{@name} Array#sort`\n"
       usage += "Or send me a direct message:\n"
       usage += " - `/msg @#{@name} Array#sort`\n"
+      usage += "To invite me in a channel, enter a channel and type:\n"
+      usage += " - `/invite @#{@name}`\n"
     end
 
     # Internal: Display the welcome message to the console when the bot starts.
