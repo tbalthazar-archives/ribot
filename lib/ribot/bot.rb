@@ -1,28 +1,31 @@
 module RiBot
-  # Internal: This class interacts with the Slack API, receiving messages
+  # Public: This class interacts with the Slack API, receiving messages
   # and answering them.
   class Bot
     # Internal: Tthe String that will trigger the bot.
     TRIGGER = "ri"
 
-    # Internal: Create a new Bot.
+    # Public: Create a new Bot.
     #
+    # token  - The String containing the Slack API Token.
     # client - The Slack::RealTime::Client that takes care of the realtime
     #          websocket connection.
     # ri     - The Ri object that will process ri commands.
     #
     # Examples
     #
-    #   Bot.new(client, ri)
-    def initialize(client = nil, ri = nil)
-      @client = client
-      @ri = ri
+    #   Bot.new(token, client, ri)
+    def initialize(token, client = nil, ri = nil)
+      raise ArgumentError.new('Token cannot be blank') if token.nil? || token.strip.empty?
+
+      @client = client || Slack::RealTime::Client.new({token: token})
+      @ri = ri || Ri.new
       @id = nil
       @name = ''
       @dm_channel_ids = []
     end
 
-    # Internal: Start the Bot. It will connect to the Slack Realtime API and
+    # Public: Start the Bot. It will connect to the Slack Realtime API and
     # listen to events.
     #
     # Examples

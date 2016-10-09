@@ -19,8 +19,20 @@ class BotTest < MiniTest::Test
     @text_unknown = "Foobarwidgetacme"
     @text_help = "help"
     @help_text_excerpt = "If you want me to help"
-    @bot = RiBot::Bot.new(@fake_client, @fake_ri)  
+    @bot = RiBot::Bot.new("fake-token", @fake_client, @fake_ri)  
     @bot.start
+  end
+
+  def test_new_bot_without_token_raises_an_error
+    [nil, '', '  '].each do |token|
+      assert_raises ArgumentError do
+        RiBot::Bot.new(token)
+      end
+    end
+  end
+
+  def test_new_bot_with_token_does_not_raise_an_error
+    RiBot::Bot.new("a-fake-token")
   end
 
   def trigger_hello_event_silently
