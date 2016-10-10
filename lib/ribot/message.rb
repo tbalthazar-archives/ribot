@@ -82,8 +82,8 @@ module RiBot
       channels.map(&:upcase).include?(channel.upcase)
     end
 
-    # Internal: Strip the text of the message from the keyword, mentions
-    # and flags.
+    # Internal: Strip the text of the message from the trigger keyword,
+    # mentions and flags.
     #
     # keyword - The String keyword that has to be removed from the text.
     #

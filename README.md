@@ -65,7 +65,7 @@ $ TOKEN=your-slack-api-token script/run
 
 In the channels where the bot has been invited, type one of the following commands:
 - `ri Array#sort`
-- `@ribot Array#sort`
+- `@ribot Array#sort`  
 Or send the bot a direct message:
 - `/msg @ribot Array#sort`
 
@@ -75,10 +75,10 @@ To invite the bot to a channel, enter a channel and type:
 ## Token
 
 The bot needs a Slack API Token to work properly.
-The `script/run` script will:
-1. look for a `TOKEN` environment variable
-2. if not found, it will try to read the token from the `.token` file
-3. if no `.token` file exists, it will prompt for the token
+The `script/run` script will:  
+1. look for a `TOKEN` environment variable  
+2. if not found, it will try to read the token from the `.token` file  
+3. if no `.token` file exists, it will prompt for the token  
 
 ## Tests
 

@@ -2,7 +2,7 @@ module RiBot
   # Public: This class interacts with the Slack API, receiving messages
   # and answering them.
   class Bot
-    # Internal: Tthe String that will trigger the bot.
+    # Internal: The String that will trigger the bot.
     TRIGGER = "ri"
 
     # Public: Create a new Bot.
@@ -10,7 +10,9 @@ module RiBot
     # token  - The String containing the Slack API Token.
     # client - The Slack::RealTime::Client that takes care of the realtime
     #          websocket connection.
+    #          (default: Slack::RealTime::Client.new({token: token}))
     # ri     - The Ri object that will process ri commands.
+    #          (default: Ri.new)
     #
     # Examples
     #
@@ -61,6 +63,8 @@ module RiBot
     # Internal: Handle the data received from the Slack API and reply with
     # either the result of the ri command, or  the usage instructions of
     # the bot.
+    #
+    # data - The Hash containing the message data received from Slack.
     #
     # Examples
     #
